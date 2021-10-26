@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rezflux_app/routes.dart';
+import 'package:rezflux_app/views/screens/home.dart';
+import 'package:rezflux_app/views/screens/splash.dart';
+import 'package:rezflux_app/views/themes/theme.dart';
 
-void main() {
-  runApp(MaterialApp(
-    theme: ThemeData(textTheme: GoogleFonts.nunitoTextTheme(),),
+void main() async {
+  await GetStorage.init();
+  runApp(GetMaterialApp(
+    initialRoute: '/',
+    getPages: [
+      GetPage(name: '/', page: () => SplashPage()),
+      GetPage(name: '/home', page: () => Home(), transition: Transition.fade)
+    ],
+    // theme: ThemeData(textTheme: GoogleFonts.nunitoTextTheme()),
+    theme: Themes.light,
+    darkTheme: Themes.dark,
+    themeMode: ThemeService().theme,
     debugShowCheckedModeBanner: false,
-    onGenerateRoute: RouteGenerator.generateRoute,
   ));
 }
+
 
 // class MyApp extends StatelessWidget {
 //   // This widget is the root of your application.

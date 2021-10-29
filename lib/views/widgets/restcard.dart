@@ -16,7 +16,7 @@ class RestCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.toNamed("/detail/${restaurant.id}");
+        Get.toNamed("/detail/${restaurant.id}", arguments: mode);
       },
       child: Container(
         margin: EdgeInsets.all(8),

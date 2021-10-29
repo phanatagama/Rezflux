@@ -10,11 +10,11 @@ import 'package:rezflux_app/views/themes/theme.dart';
 void main() async {
   await GetStorage.init();
   runApp(GetMaterialApp(
-    initialRoute: '/detail/123',
+    initialRoute: '/',
     getPages: [
       GetPage(name: '/', page: () => SplashPage()),
-      GetPage(name: '/home', page: () => Home(), transition: Transition.fade),
-      GetPage(name: '/detail/:id', page: () => Detail(), transition: Transition.fade)
+      GetPage(name: '/home', page: () => Home(), transition: Transition.zoom),
+      GetPage(name: '/detail/:id', page: () => Detail(), transition: Transition.rightToLeftWithFade)
     ],
     // theme: ThemeData(textTheme: GoogleFonts.nunitoTextTheme()),
     theme: Themes.light,

@@ -1,22 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rezflux_app/view_models/listrestaurant.dart';
+import 'package:rezflux_app/controller/home.dart';
 import 'package:rezflux_app/views/themes/theme.dart';
 import 'package:rezflux_app/views/widgets/restcard.dart';
 
-class HomeController extends GetxController with StateMixin {
-  ApiProvider _apiProvider = ApiProvider();
-  @override
-  void onInit() {
-    super.onInit();
-    _apiProvider.fetchRestaurants().then((response) {
-      change(response, status: RxStatus.success());
-    }, onError: (err) {
-      change(null, status: RxStatus.error(err.toString()));
-    });
-  }
-}
 
 class Home extends StatefulWidget {
 

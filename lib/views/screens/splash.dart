@@ -26,7 +26,7 @@ class _SplashPageState extends State<SplashPage> {
       showLoader: true,
       loadingText: Text("Loading..."),
       navigator: Home(),
-      durationInSeconds: 0,
+      durationInSeconds: 3,
     );
   }
 }

@@ -18,6 +18,105 @@ class _DetailState extends State {
   final DetailController controller =
       Get.put(DetailController(Get.parameters['id'] ?? 'rqdv5juczeskfw1e867'));
 
+  int _menuConstraint(num maxWidth) {
+    if (maxWidth < 600){
+      return 2;
+    } else if (maxWidth < 900) {
+      return 3;
+    } else if (maxWidth < 1200) {
+      return 4;
+    } else {
+      return 5;
+    }
+  }
+
+  Widget _labels(List<Category> menu, String type, int count) {
+    var icon = type == 'foods'
+        ? FaIcon(
+      FontAwesomeIcons.utensils,
+      color: Colors.blue,
+      size: 16,
+    ) : FaIcon(FontAwesomeIcons.cocktail, color: Colors.blue, size: 16);
+    return Scrollbar(child: GridView.builder(
+      shrinkWrap: true,
+      itemCount: menu.length,
+      gridDelegate:
+      SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: count,
+          childAspectRatio: (1 / .2)),
+      itemBuilder: (_, index) {
+        return
+          ConstrainedBox(constraints: BoxConstraints(maxHeight: 48, minHeight: 48),child: Container(
+            decoration: BoxDecoration(
+              color: Colors.blue.withOpacity(0.3),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            padding: EdgeInsets.all(8),
+            margin: EdgeInsets.all(4),
+            child: Row(
+              children: [
+                icon,
+                SizedBox(
+                  width: 8,
+                ),
+                Text(
+                    menu[index].name,
+                    style: GoogleFonts.lato(fontWeight: FontWeight.w500), overflow: TextOverflow.ellipsis
+                )
+              ],
+            ),
+          ),)
+        ;
+      },
+    ));
+  }
+
+  Widget _customerReview(List customerReviews) {
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        return ListTile(
+            title: Text(customerReviews[index].name, style: GoogleFonts.montserrat(fontSize: 16, fontWeight: FontWeight.w500)),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(customerReviews[index].date, style: GoogleFonts.mulish(fontSize: 10)),
+                Text(customerReviews[index].review, style: GoogleFonts.mulish(fontSize: 14))
+              ],
+            ),
+            leading: CircleAvatar(
+              child: Text(customerReviews[index].name[0],
+                  style: GoogleFonts.mulish(fontSize: 16)),
+            ));
+      },
+      itemCount: customerReviews.length,
+    );
+  }
+
+  List<Widget> _categories(List categories) {
+    List<Widget> list = [];
+    for (var index = 0; index < categories.length; index++) {
+      list.add(Chip(
+        label: Text(
+          categories[index].name,
+          style: GoogleFonts.nunito(
+              textStyle:
+              TextStyle(color: Colors.blue, fontWeight: FontWeight.w700)),
+        ),
+        backgroundColor: const Color(0xA4EBF3),
+        avatar: FaIcon(
+          FontAwesomeIcons.checkCircle,
+          color: Colors.blue,
+          size: 16,
+          semanticLabel: 'Categories',
+        ),
+      ));
+      list.add(SizedBox(
+        width: 8,
+      ));
+    }
+    return list;
+  }
+
   @override
   Widget build(BuildContext context) {
     BorderRadiusGeometry radius = BorderRadius.only(
@@ -28,7 +127,7 @@ class _DetailState extends State {
         body: controller.obx(
           (data) => SlidingUpPanel(
             borderRadius: radius,
-            minHeight: 50,
+            minHeight: 48,
             color: Get.arguments,
             maxHeight: (data.customerReviews.length*64 < 5*64) ? data.customerReviews.length*64 : 5*64,
             collapsed: Container(
@@ -46,14 +145,39 @@ class _DetailState extends State {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Stack(children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(32),
-                            bottomLeft: Radius.circular(32)),
-                        child: CachedNetworkImage(
-                          imageUrl:
-                          "https://restaurant-api.dicoding.dev/images/large/${data.pictureId}",
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(32),
+                                bottomLeft: Radius.circular(32)),
+                          color: Colors.transparent,
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: CachedNetworkImageProvider(
+                                  "https://restaurant-api.dicoding.dev/images/large/${data.pictureId}",
+                                ),
+                          ),
                         ),
+                        height: 350.0,
+                      ),
+                      Container(
+                        height: 350.0,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(32),
+                                bottomLeft: Radius.circular(32)),
+                            color: Colors.white,
+                            gradient: LinearGradient(
+                                begin: FractionalOffset.topCenter,
+                                end: FractionalOffset.bottomCenter,
+                                colors: [
+                                  Colors.grey.withOpacity(0.0),
+                                  Colors.black,
+                                ],
+                                stops: [
+                                  0.0,
+                                  1.0
+                                ])),
                       ),
                       Positioned(
                           bottom: 32,
@@ -122,7 +246,24 @@ class _DetailState extends State {
                                     )
                                   ],
                                 )
-                              ]))
+                              ])),
+                      SafeArea(
+                        child: Padding(
+                          padding: const EdgeInsets.all(32),
+                          child: CircleAvatar(
+                            backgroundColor: Colors.grey.withOpacity(0.5),
+                            child: IconButton(
+                              icon: FaIcon(
+                                FontAwesomeIcons.arrowLeft,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                Get.back();
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
                     ]),
                     Container(
                       decoration: BoxDecoration(
@@ -168,42 +309,26 @@ class _DetailState extends State {
                                 style: GoogleFonts.nunito(
                                     fontWeight: FontWeight.bold, fontSize: 24),
                               ),
-                              SizedBox(
-                                height: (data.menus.foods.length / 2).round() * (48),
-                                child: GridView.builder(
-                                  itemCount: data.menus.foods.length,
-                                  gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      childAspectRatio: (1 / .2)),
-                                  itemBuilder: (_, index) {
-                                    var details = data.menus.foods[index];
-                                    return _labels(details, 'foods');
+                              LayoutBuilder(
+                                  builder: (context, constraints){
+                                    return _labels(data.menus.foods, "foods", _menuConstraint(constraints.maxWidth));
                                   },
-                                ),
-                              ),
+                                )
+                              ,
                               Text(
                                 "Drinks",
                                 style: GoogleFonts.nunito(
                                     fontWeight: FontWeight.bold, fontSize: 24),
                               ),
-                              SizedBox(
-                                height: (data.menus.drinks.length / 2).round() * (48),
-                                child: GridView.builder(
-                                  itemCount: data.menus.drinks.length,
-                                  gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      childAspectRatio: (1 / .2)),
-                                  itemBuilder: (_, index) {
-                                    var details = data.menus.drinks[index];
-                                    return _labels(details, 'drinks');
+                               LayoutBuilder(
+                                  builder: (context, constraints){
+                                    return _labels(data.menus.drinks, "drinks", _menuConstraint(constraints.maxWidth));
                                   },
-                                ),
-                              ),
+                                )
+                              ,
                             ])),
                     SizedBox(
-                      height: 50,
+                      height: 48,
                     )
                   ],
                 )),
@@ -213,83 +338,6 @@ class _DetailState extends State {
         child: CircularProgressIndicator(),
       ),
     ),
-        appBar: false ? AppBar(title: Text("Detail Page")) : null);
-  }
-
-  Widget _labels(Category menu, String type) {
-    var icon = type == 'foods'
-        ? FaIcon(
-            FontAwesomeIcons.utensils,
-            color: Colors.blue,
-            size: 16,
-          )
-        : FaIcon(FontAwesomeIcons.cocktail, color: Colors.blue, size: 16);
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.blue.withOpacity(0.3),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      height: double.infinity,
-      padding: EdgeInsets.all(8),
-      margin: EdgeInsets.all(4),
-      child: Row(
-        children: [
-          icon,
-          SizedBox(
-            width: 8,
-          ),
-          Text(
-            menu.name,
-            style: GoogleFonts.lato(fontWeight: FontWeight.w500), overflow: TextOverflow.ellipsis
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _customerReview(List customerReviews) {
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        return ListTile(
-              title: Text(customerReviews[index].name, style: GoogleFonts.montserrat(fontSize: 16, fontWeight: FontWeight.w500)),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(customerReviews[index].date, style: GoogleFonts.mulish(fontSize: 10)),
-                  Text(customerReviews[index].review, style: GoogleFonts.mulish(fontSize: 14))
-                ],
-              ),
-              leading: CircleAvatar(
-                child: Text(customerReviews[index].name[0],
-                    style: GoogleFonts.mulish(fontSize: 16)),
-              ));
-      },
-      itemCount: customerReviews.length,
-    );
-  }
-
-  List<Widget> _categories(List categories) {
-    List<Widget> list = [];
-    for (var index = 0; index < categories.length; index++) {
-      list.add(Chip(
-        label: Text(
-          categories[index].name,
-          style: GoogleFonts.nunito(
-              textStyle:
-                  TextStyle(color: Colors.blue, fontWeight: FontWeight.w700)),
-        ),
-        backgroundColor: const Color(0xA4EBF3),
-        avatar: FaIcon(
-          FontAwesomeIcons.checkCircle,
-          color: Colors.blue,
-          size: 16,
-          semanticLabel: 'Categories',
-        ),
-      ));
-      list.add(SizedBox(
-        width: 8,
-      ));
-    }
-    return list;
+        appBar: null);
   }
 }

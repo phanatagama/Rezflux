@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:rezflux_app/views/screens/detail.dart';
 import 'package:rezflux_app/views/screens/home.dart';
 import 'package:rezflux_app/views/screens/splash.dart';
-import 'package:rezflux_app/views/themes/theme.dart';
+import 'package:rezflux_app/views/config/theme.dart';
 
 void main() async {
   await GetStorage.init();

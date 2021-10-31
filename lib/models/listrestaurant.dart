@@ -20,17 +20,6 @@ class Restaurant {
           return Restaurants.fromJson(restaurant);
         })));
   }
-
-  // Map<String, dynamic> toJson() {
-  //   final Map<String, dynamic> data = new Map<String, dynamic>();
-  //   data['error'] = this.error;
-  //   data['message'] = this.message;
-  //   data['count'] = this.count;
-  //   if (this.restaurants != null) {
-  //     data['restaurants'] = this.restaurants.map((v) => v.toJson()).toList();
-  //   }
-  //   return data;
-  // }
 }
 
 class Restaurants {
@@ -59,14 +48,14 @@ class Restaurants {
         rating: json['rating']);
   }
 
-  // Map<String, dynamic> toJson() {
-  //   final Map<String, dynamic> data = new Map<String, dynamic>();
-  //   data['id'] = this.id;
-  //   data['name'] = this.name;
-  //   data['description'] = this.description;
-  //   data['pictureId'] = this.pictureId;
-  //   data['city'] = this.city;
-  //   data['rating'] = this.rating;
-  //   return data;
-  // }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['description'] = this.description;
+    data['pictureId'] = this.pictureId;
+    data['city'] = this.city;
+    data['rating'] = this.rating;
+    return data;
+  }
 }

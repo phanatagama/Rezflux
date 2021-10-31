@@ -34,7 +34,6 @@ dependencies:
   cached_network_image: ^3.1.0
   google_fonts: ^2.1.0
   font_awesome_flutter: ^9.2.0
-  animated_text_kit: ^4.2.1
   sliding_up_panel: ^2.0.0+1
 
 dev_dependencies:

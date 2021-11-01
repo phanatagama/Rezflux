@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rezflux_app/controller/home.dart';
-import 'package:rezflux_app/views/config/theme.dart';
-import 'package:rezflux_app/views/widgets/restcard.dart';
+import 'package:rezflux_app/controller/home_controller.dart';
+import 'package:rezflux_app/views/config/theme_config.dart';
+import 'package:rezflux_app/views/widgets/restcard_widget.dart';
 
 class Home extends StatefulWidget {
   @override

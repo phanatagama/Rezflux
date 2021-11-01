@@ -4,17 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rezflux_app/controller/detail.dart';
-import 'package:rezflux_app/models/detail.dart';
+import 'package:rezflux_app/controller/detail_controller.dart';
+import 'package:rezflux_app/models/detail_model.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-class Detail extends StatefulWidget {
-  @override
-  _DetailState createState() => _DetailState();
-}
-
-class _DetailState extends State {
-
+class Detail extends StatelessWidget {
   final DetailController controller =
       Get.put(DetailController(Get.parameters['id'] ?? 'rqdv5juczeskfw1e867'));
 

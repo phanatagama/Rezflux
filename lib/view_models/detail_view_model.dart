@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:rezflux_app/models/detail.dart';
+import 'package:rezflux_app/models/detail_model.dart';
 
 class ApiProvider extends GetConnect {
 

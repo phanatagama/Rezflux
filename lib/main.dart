@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:rezflux_app/views/screens/detail.dart';
-import 'package:rezflux_app/views/screens/home.dart';
-import 'package:rezflux_app/views/screens/splash.dart';
-import 'package:rezflux_app/views/config/theme.dart';
+import 'package:rezflux_app/views/screens/detail_screen.dart';
+import 'package:rezflux_app/views/screens/home_screen.dart';
+import 'package:rezflux_app/views/screens/splash_screen.dart';
+import 'package:rezflux_app/views/config/theme_config.dart';
 
 void main() async {
   await GetStorage.init();

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:rezflux_app/views/config/favorite.dart';
-import 'package:rezflux_app/views/config/theme.dart';
+import 'package:rezflux_app/views/config/favorite_config.dart';
+import 'package:rezflux_app/views/config/theme_config.dart';
 
 void main() async{
   await GetStorage.init();

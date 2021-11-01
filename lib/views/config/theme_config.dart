@@ -4,11 +4,9 @@ import 'package:get_storage/get_storage.dart';
 class Themes {
   static final light = ThemeData.light().copyWith(
     backgroundColor: Colors.white,
-    buttonColor: Colors.blue,
   );
   static final dark = ThemeData.dark().copyWith(
     backgroundColor: Colors.black,
-    buttonColor: Colors.red,
   );
 }
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:rezflux_app/views/config/favorite.dart';
+import 'package:rezflux_app/views/config/favorite_config.dart';
 
 class Favorite extends StatefulWidget {
   final String id;

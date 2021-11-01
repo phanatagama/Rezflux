@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:rezflux_app/models/listrestaurant.dart';
+import 'package:rezflux_app/models/list_restaurant_model.dart';
 
 class ApiProvider extends GetConnect {
 

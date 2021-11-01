@@ -3,8 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rezflux_app/models/listrestaurant.dart';
-import 'package:rezflux_app/views/widgets/favorite.dart';
+import 'package:rezflux_app/models/list_restaurant_model.dart';
+import 'package:rezflux_app/views/widgets/favorite_widget.dart';
 
 class RestCard extends StatelessWidget {
   final Color mode;

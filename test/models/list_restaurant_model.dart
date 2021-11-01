@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:rezflux_app/models/listrestaurant.dart';
+import 'package:rezflux_app/models/list_restaurant_model.dart';
 
 var apiResponse = {
 "error": false,
@@ -20,7 +20,7 @@ var apiResponse = {
 "description": "Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. ...",
 "pictureId": "25",
 "city": "Gorontalo",
-"rating": 4.0
+"rating": 4
 }
 ]
 };

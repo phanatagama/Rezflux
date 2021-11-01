@@ -1,12 +1,16 @@
 import 'package:get/get.dart';
-import 'package:rezflux_app/view_models/listrestaurant.dart';
+import 'package:rezflux_app/view_models/detail_view_model.dart';
 
-class HomeController extends GetxController with StateMixin {
+class DetailController extends GetxController with StateMixin {
   ApiProvider _apiProvider = ApiProvider();
+
+  String parameter;
+
+  DetailController(this.parameter);
   @override
   void onInit() {
     super.onInit();
-    _apiProvider.fetchRestaurants().then((response) {
+    _apiProvider.fetchDetailRestaurants(parameter).then((response) {
       change(response, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));

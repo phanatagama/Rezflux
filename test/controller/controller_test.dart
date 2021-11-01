@@ -7,8 +7,8 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
-import 'package:rezflux_app/controller/detail.dart';
-import 'package:rezflux_app/controller/home.dart';
+import 'package:rezflux_app/controller/detail_controller.dart';
+import 'package:rezflux_app/controller/home_controller.dart';
 
 void main(){
   group('Testing Home Controller', () {

@@ -14,16 +14,16 @@ class _HomeState extends State {
   final HomeController controller = Get.put(HomeController());
   bool isDark = Get.isDarkMode;
 
-  int _cardConstraint(num maxWidth){
+  dynamic _cardConstraint(dynamic maxWidth) {
     if (maxWidth < 900) {
       return 2;
-    } else if (maxWidth < 1200){
+    } else if (maxWidth < 1200) {
       return 3;
     } else {
       return 5;
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,13 +45,15 @@ class _HomeState extends State {
         body: controller.obx(
           (data) => LayoutBuilder(builder: (context, constraints) {
             return GridView.builder(
-              itemCount: data.length,
-              gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: _cardConstraint(constraints.maxWidth)),
+              itemCount: data?.length ?? 0,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: _cardConstraint(constraints.maxWidth)),
               itemBuilder: (context, index) {
                 var details = data[index];
                 return RestCard(
-                    mode: context.theme.backgroundColor, restaurant: details);
+                  mode: context.theme.backgroundColor,
+                  restaurant: details,
+                );
               },
             );
           }),

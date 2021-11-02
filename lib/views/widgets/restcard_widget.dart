@@ -12,10 +12,10 @@ class RestCard extends StatelessWidget {
 
   RestCard({required this.mode, required this.restaurant});
 
-  List<Widget> generateStar(num rating) {
+  List<Widget> generateStar(dynamic rating) {
     List<Widget> list = [];
     var halfrate = rating - rating.toInt();
-    for(var i=0; i<rating.toInt(); i+=1) {
+    for (var i = 0; i < rating.toInt(); i += 1) {
       list.add(FaIcon(
         FontAwesomeIcons.solidStar,
         color: Colors.yellow,
@@ -34,7 +34,7 @@ class RestCard extends StatelessWidget {
         ));
       }
       if (list.length < 5) {
-        for (var i=0; i<(5 - list.length); i+=1) {
+        for (var i = 0; i < (5 - list.length); i += 1) {
           list.add(FaIcon(
             FontAwesomeIcons.star,
             color: Colors.yellow,
@@ -58,7 +58,10 @@ class RestCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.toNamed("/detail/${restaurant.id}", arguments: mode);
+        Get.toNamed(
+          "/detail/${restaurant.id}",
+          arguments: mode,
+        );
       },
       child: AspectRatio(
         aspectRatio: 1,
@@ -98,18 +101,21 @@ class RestCard extends StatelessWidget {
                           fit: BoxFit.fitWidth),
                     ),
                     child: Opacity(
-                        opacity: 0.3,
-                        child: Container(
-                            decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment(0.8, 0.0),
-                                  colors: [
-                                    const Color(0xFFFFFFEE),
-                                    const Color(0xFF999999)
-                                  ],
-                                  tileMode: TileMode.repeated,
-                                )))),
+                      opacity: 0.3,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment(0.8, 0.0),
+                            colors: [
+                              const Color(0xFFFFFFEE),
+                              const Color(0xFF999999)
+                            ],
+                            tileMode: TileMode.repeated,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                   Positioned(
                       bottom: 16,
@@ -127,7 +133,13 @@ class RestCard extends StatelessWidget {
                       top: 16,
                       left: 16,
                       child: Chip(
-                        label: Text(restaurant.city, style: GoogleFonts.nunito(textStyle: TextStyle(color: Colors.blue, fontWeight: FontWeight.w700)),),
+                        label: Text(
+                          restaurant.city,
+                          style: GoogleFonts.nunito(
+                              textStyle: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.w700)),
+                        ),
                         backgroundColor: const Color(0xA4EBF3),
                         avatar: FaIcon(
                           FontAwesomeIcons.mapMarkerAlt,
@@ -137,10 +149,10 @@ class RestCard extends StatelessWidget {
                         ),
                       )),
                   Positioned(
-                      top: 8,
-                      right: 8,
-                      child: Favorite(id: restaurant.id)
-                      )
+                    top: 8,
+                    right: 8,
+                    child: Favorite(id: restaurant.id),
+                  )
                 ])),
             Expanded(
                 flex: 1,
@@ -154,18 +166,19 @@ class RestCard extends StatelessWidget {
                   ),
                 )),
             Expanded(
-                flex: 2,
-                child: Padding(
-                    padding: EdgeInsets.all(16),
-                    child: Text(
-                      restaurant.description, overflow: TextOverflow.ellipsis, maxLines: 2,)))
+              flex: 2,
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Text(
+                  restaurant.description,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+              ),
+            )
           ]),
         ),
-      )
-      ,
+      ),
     );
   }
-
-
 }
-

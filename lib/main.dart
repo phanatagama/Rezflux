@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -12,8 +13,16 @@ void main() async {
     initialRoute: '/',
     getPages: [
       GetPage(name: '/', page: () => SplashPage()),
-      GetPage(name: '/home', page: () => Home(), transition: Transition.zoom),
-      GetPage(name: '/detail/:id', page: () => Detail(), transition: Transition.rightToLeftWithFade)
+      GetPage(
+        name: '/home',
+        page: () => Home(),
+        transition: Transition.zoom,
+      ),
+      GetPage(
+        name: '/detail/:id',
+        page: () => Detail(),
+        transition: Transition.rightToLeftWithFade,
+      )
     ],
     // theme: ThemeData(textTheme: GoogleFonts.nunitoTextTheme()),
     theme: Themes.light,

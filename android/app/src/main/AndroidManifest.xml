@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.phanatagama.rezflux_app">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="rezflux_app"
         android:icon="@mipmap/ic_launcher">

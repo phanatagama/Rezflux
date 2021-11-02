@@ -37,7 +37,7 @@ var apiResponse = {
         }
       ]
     },
-    "rating": 4.2,
+    "rating": 4,
     "customerReviews": [
       {
         "name": "Ahmad",

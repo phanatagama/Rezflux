@@ -1,7 +1,7 @@
 class Restaurant {
   bool error;
   String message;
-  int count;
+  dynamic count;
   List<Restaurants> restaurants;
 
   Restaurant(
@@ -28,7 +28,7 @@ class Restaurants {
   String description;
   String pictureId;
   String city;
-  double rating;
+  dynamic rating;
 
   Restaurants(
       {required this.id,
@@ -55,7 +55,7 @@ class Restaurants {
     data['description'] = this.description;
     data['pictureId'] = this.pictureId;
     data['city'] = this.city;
-    data['rating'] = this.rating;
+    data['rating'] = this.rating.toDouble();
     return data;
   }
 }

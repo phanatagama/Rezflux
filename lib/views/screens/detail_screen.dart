@@ -26,7 +26,7 @@ class Detail extends StatelessWidget {
     }
   }
 
-  Widget _labelsMenu(List<Category> menu, String type, dynamic count) {
+  Widget _labelsMenu(List<Category> menu, String type, num count) {
     var icon = type == 'foods'
         ? FaIcon(
             FontAwesomeIcons.utensils,
@@ -41,7 +41,7 @@ class Detail extends StatelessWidget {
     return Scrollbar(
         child: GridView.builder(
       shrinkWrap: true,
-      itemCount: menu.length ,
+      itemCount: menu.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: count.toInt(),
         childAspectRatio: (1 / .2),
@@ -149,8 +149,7 @@ class Detail extends StatelessWidget {
       topRight: Radius.circular(24.0),
     );
     return Scaffold(
-        body:
-        controller.obx(
+        body: controller.obx(
           (data) => SlidingUpPanel(
             borderRadius: radius,
             minHeight: 48,
@@ -184,10 +183,9 @@ class Detail extends StatelessWidget {
                       color: Colors.transparent,
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: NetworkImage('../assets/img.png'),
-                        // CachedNetworkImageProvider(
-                        //   "https://restaurant-api.dicoding.dev/images/large/${data?.pictureId}",
-                        // ),
+                        image: CachedNetworkImageProvider(
+                          "https://restaurant-api.dicoding.dev/images/large/${data?.pictureId}",
+                        ),
                       ),
                     ),
                     height: 350.0,

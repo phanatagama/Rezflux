@@ -14,7 +14,7 @@ class _HomeState extends State {
   final HomeController controller = Get.put(HomeController());
   bool isDark = Get.isDarkMode;
 
-  dynamic _cardConstraint(dynamic maxWidth) {
+  int _cardConstraint(num maxWidth) {
     if (maxWidth < 600){
       return 1;
     } else if(maxWidth < 900) {

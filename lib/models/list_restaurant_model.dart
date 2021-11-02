@@ -1,7 +1,7 @@
 class Restaurant {
   bool error;
   String message;
-  dynamic count;
+  int count;
   List<Restaurants> restaurants;
 
   Restaurant(
@@ -28,7 +28,7 @@ class Restaurants {
   String description;
   String pictureId;
   String city;
-  dynamic rating;
+  num rating;
 
   Restaurants(
       {required this.id,

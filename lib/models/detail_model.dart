@@ -44,7 +44,7 @@ class Restaurant {
   String pictureId;
   List<Category> categories;
   Menus menus;
-  dynamic rating;
+  num rating;
   List<CustomerReview> customerReviews;
 
   factory Restaurant.fromJson(Map<String, dynamic> json) => Restaurant(

@@ -12,7 +12,7 @@ class RestCard extends StatelessWidget {
 
   RestCard({required this.mode, required this.restaurant});
 
-  List<Widget> generateStar(dynamic rating) {
+  List<Widget> generateStar(num rating) {
     List<Widget> list = [];
     var halfrate = rating - rating.toInt();
     for (var i = 0; i < rating.toInt(); i += 1) {
@@ -96,9 +96,8 @@ class RestCard extends StatelessWidget {
                           topLeft: Radius.circular(8),
                           topRight: Radius.circular(8)),
                       image: DecorationImage(
-                          image: NetworkImage('../assets/img.png'),
-                          // NetworkImage(
-                          //     "https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}"),
+                          image: CachedNetworkImageProvider(
+                              "https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}"),
                           fit: BoxFit.fitWidth),
                     ),
                     child: Opacity(

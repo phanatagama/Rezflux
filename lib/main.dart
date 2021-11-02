@@ -10,7 +10,7 @@ import 'package:rezflux_app/views/config/theme_config.dart';
 void main() async {
   await GetStorage.init();
   runApp(GetMaterialApp(
-    initialRoute: '/home',
+    initialRoute: '/',
     getPages: [
       GetPage(name: '/', page: () => SplashPage()),
       GetPage(

@@ -15,7 +15,9 @@ class _HomeState extends State {
   bool isDark = Get.isDarkMode;
 
   dynamic _cardConstraint(dynamic maxWidth) {
-    if (maxWidth < 900) {
+    if (maxWidth < 600){
+      return 1;
+    } else if(maxWidth < 900) {
       return 2;
     } else if (maxWidth < 1200) {
       return 3;

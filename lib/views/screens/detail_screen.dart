@@ -13,7 +13,9 @@ class Detail extends StatelessWidget {
       Get.put(DetailController(Get.parameters['id'] ?? 'rqdv5juczeskfw1e867'));
 
   dynamic _menuConstraint(dynamic maxWidth) {
-    if (maxWidth < 600) {
+    if (maxWidth < 400) {
+      return 1;
+    } else if (maxWidth < 600) {
       return 2;
     } else if (maxWidth < 900) {
       return 3;
@@ -24,7 +26,7 @@ class Detail extends StatelessWidget {
     }
   }
 
-  Widget _labels(List<Category> menu, String type, dynamic count) {
+  Widget _labelsMenu(List<Category> menu, String type, dynamic count) {
     var icon = type == 'foods'
         ? FaIcon(
             FontAwesomeIcons.utensils,
@@ -113,7 +115,7 @@ class Detail extends StatelessWidget {
     );
   }
 
-  List<Widget> _categories(List categories) {
+  List<Widget> _categoriesRest(List categories) {
     List<Widget> list = [];
     for (var index = 0; index < categories.length; index++) {
       list.add(Chip(
@@ -147,14 +149,13 @@ class Detail extends StatelessWidget {
       topRight: Radius.circular(24.0),
     );
     return Scaffold(
-        body: controller.obx(
+        body:
+        controller.obx(
           (data) => SlidingUpPanel(
             borderRadius: radius,
             minHeight: 48,
             color: Get.arguments ?? Colors.blue,
-            maxHeight: (data?.customerReviews?.length * 64 < 5 * 64)
-                ? data?.customerReviews?.length * 64
-                : 5 * 64,
+            maxHeight: 216,
             collapsed: Container(
               decoration: BoxDecoration(
                 color: Colors.blue,
@@ -183,9 +184,10 @@ class Detail extends StatelessWidget {
                       color: Colors.transparent,
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: CachedNetworkImageProvider(
-                          "https://restaurant-api.dicoding.dev/images/large/${data?.pictureId}",
-                        ),
+                        image: NetworkImage('../assets/img.png'),
+                        // CachedNetworkImageProvider(
+                        //   "https://restaurant-api.dicoding.dev/images/large/${data?.pictureId}",
+                        // ),
                       ),
                     ),
                     height: 350.0,
@@ -315,7 +317,7 @@ class Detail extends StatelessWidget {
                           fontSize: 24,
                         ),
                       ),
-                      Row(children: _categories(data?.categories)),
+                      Row(children: _categoriesRest(data?.categories)),
                       SizedBox(
                         height: 8,
                       ),
@@ -350,7 +352,7 @@ class Detail extends StatelessWidget {
                           ),
                           LayoutBuilder(
                             builder: (context, constraints) {
-                              return _labels(data?.menus?.foods, "foods",
+                              return _labelsMenu(data?.menus?.foods, "foods",
                                   _menuConstraint(constraints.maxWidth));
                             },
                           ),
@@ -363,7 +365,7 @@ class Detail extends StatelessWidget {
                           ),
                           LayoutBuilder(
                             builder: (context, constraints) {
-                              return _labels(data?.menus?.drinks, "drinks",
+                              return _labelsMenu(data?.menus?.drinks, "drinks",
                                   _menuConstraint(constraints.maxWidth));
                             },
                           ),
@@ -378,6 +380,7 @@ class Detail extends StatelessWidget {
           onLoading: Center(
             child: CircularProgressIndicator(),
           ),
+          onError: (error) => Text("Error $error"),
         ),
         appBar: null);
   }

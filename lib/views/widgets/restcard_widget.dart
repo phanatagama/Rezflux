@@ -96,8 +96,9 @@ class RestCard extends StatelessWidget {
                           topLeft: Radius.circular(8),
                           topRight: Radius.circular(8)),
                       image: DecorationImage(
-                          image: CachedNetworkImageProvider(
-                              "https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}"),
+                          image: NetworkImage('../assets/img.png'),
+                          // NetworkImage(
+                          //     "https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}"),
                           fit: BoxFit.fitWidth),
                     ),
                     child: Opacity(

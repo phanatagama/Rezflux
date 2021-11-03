@@ -154,7 +154,9 @@ class Detail extends StatelessWidget {
             borderRadius: radius,
             minHeight: 48,
             color: Get.arguments ?? Colors.blue,
-            maxHeight: 216,
+            maxHeight:  (data?.customerReviews?.length < 5 )
+                ? data?.customerReviews?.length * 72.0
+                : 5.0 * 72.0,
             collapsed: Container(
               decoration: BoxDecoration(
                 color: Colors.blue,

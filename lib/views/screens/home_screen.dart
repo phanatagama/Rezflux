@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rezflux_app/controller/home_controller.dart';
+import 'package:rezflux_app/controller/restaurant_controller.dart';
 import 'package:rezflux_app/views/config/theme_config.dart';
 import 'package:rezflux_app/views/widgets/restcard_widget.dart';
 
@@ -11,7 +11,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State {
-  final HomeController controller = Get.put(HomeController());
+  final RestaurantController controller = Get.put(RestaurantController());
   bool isDark = Get.isDarkMode;
 
   int _cardConstraint(num maxWidth) {

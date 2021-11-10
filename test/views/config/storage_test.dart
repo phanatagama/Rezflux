@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:rezflux_app/views/config/favorite_config.dart';
 import 'package:rezflux_app/views/config/theme_config.dart';
 
 void main() async{
@@ -12,14 +11,6 @@ void main() async{
       expect(ThemeService().theme, ThemeMode.dark);
       ThemeService().switchTheme();
       expect(ThemeService().theme, ThemeMode.light);
-    });
-  });
-  group('Testing Favorite Storage', () {
-    test('Favorite storage should be change', () {
-      FavoriteService().changeFavorite('rqdv5juczeskfw1e867');
-      expect(FavoriteService().favorite.isNotEmpty, true);
-      FavoriteService().changeFavorite('rqdv5juczeskfw1e867');
-      expect(FavoriteService().favorite.isEmpty, true);
     });
   });
 }

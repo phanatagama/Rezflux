@@ -7,20 +7,11 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
-import 'package:rezflux_app/controller/detail_controller.dart';
-import 'package:rezflux_app/controller/home_controller.dart';
+import 'package:rezflux_app/controller/restaurant_controller.dart';
 
 void main(){
   group('Testing Home Controller', () {
-    final HomeController controller = Get.put(HomeController());
-
-    test('Response status should be no error', () {
-      expect(controller.status.isError, false);
-    });
-  });
-  group('Testing Detail Controller', () {
-    final DetailController controller =
-    Get.put(DetailController('rqdv5juczeskfw1e867'));
+    final RestaurantController controller = Get.put(RestaurantController());
 
     test('Response status should be no error', () {
       expect(controller.status.isError, false);

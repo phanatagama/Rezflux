@@ -13,9 +13,7 @@ class MyHttpOverrides extends HttpOverrides {
   HttpClient createHttpClient(SecurityContext context) {
     return super.createHttpClient(context)
       ..badCertificateCallback = (X509Certificate cert, String host, int port) {
-        // Load the local file
         String _localPem = 'CERTIFICATE_STRING';
-        // Check the certificate
         if (_localPem == cert.pem)
           return true;
         else

@@ -3,12 +3,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rezflux_app/models/list_restaurant_model.dart';
+// import 'package:rezflux_app/models/list_restaurant_model.dart';
 import 'package:rezflux_app/views/widgets/favorite_widget.dart';
+import 'package:rezflux_app/models/restaurant_model.dart';
 
 class RestCard extends StatelessWidget {
   final Color mode;
-  final Restaurants restaurant;
+  // final Restaurants restaurant;
+  final Restaurant restaurant;
 
   RestCard({required this.mode, required this.restaurant});
 
@@ -97,7 +99,7 @@ class RestCard extends StatelessWidget {
                           topRight: Radius.circular(8)),
                       image: DecorationImage(
                           image: CachedNetworkImageProvider(
-                              "https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}"),
+                              "${restaurant.pictureId}"),
                           fit: BoxFit.fitWidth),
                     ),
                     child: Opacity(
@@ -148,11 +150,11 @@ class RestCard extends StatelessWidget {
                           semanticLabel: 'Place Logo',
                         ),
                       )),
-                  Positioned(
-                    top: 8,
-                    right: 8,
-                    child: Favorite(id: restaurant.id),
-                  )
+                  // Positioned(
+                  //   top: 8,
+                  //   right: 8,
+                  //   child: Favorite(id: restaurant.id),
+                  // )
                 ])),
             Expanded(
                 flex: 1,

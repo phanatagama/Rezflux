@@ -13,25 +13,48 @@ class Home extends StatefulWidget {
 class _HomeState extends State {
   final RestaurantController controller = Get.put(RestaurantController());
   bool isDark = Get.isDarkMode;
-
-  int _cardConstraint(num maxWidth) {
-    if (maxWidth < 600){
-      return 1;
-    } else if(maxWidth < 900) {
-      return 2;
-    } else if (maxWidth < 1200) {
-      return 3;
-    } else {
-      return 5;
-    }
-  }
-
+  Icon customIcon = const Icon(Icons.search);
+  Widget customSearchBar = const Text("RezFlux");
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("RezFlux"),
+          title: customSearchBar,
           actions: [
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  if (customIcon.icon == Icons.search) {
+                    customIcon = const Icon(Icons.cancel);
+                    customSearchBar = const ListTile(
+                      leading: Icon(
+                        Icons.search,
+                        color: Colors.white,
+                        size: 28,
+                      ),
+                      title: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'Cari Nama Restaurant',
+                          hintStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontStyle: FontStyle.italic,
+                          ),
+                          border: InputBorder.none,
+                        ),
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    );
+                  } else {
+                    customIcon = const Icon(Icons.search);
+                    customSearchBar = const Text("RezFlux");
+                  }
+                });
+              },
+              icon: customIcon,
+            ),
             Switch(
                 value: isDark,
                 onChanged: (bool value) {
@@ -45,24 +68,48 @@ class _HomeState extends State {
           ],
         ),
         body: controller.obx(
-          (data) => LayoutBuilder(builder: (context, constraints) {
-            return GridView.builder(
-              itemCount: data?.length ?? 0,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: _cardConstraint(constraints.maxWidth)),
-              itemBuilder: (context, index) {
-                var details = data[index];
-                return RestCard(
-                  mode: context.theme.backgroundColor,
-                  restaurant: details,
-                );
-              },
-            );
-          }),
+          (data) => HomePage(data: data),
           onEmpty: const Text("empty"),
           onLoading: Center(
             child: CircularProgressIndicator(),
           ),
         ));
   }
+}
+
+class HomePage extends StatelessWidget {
+  final data;
+  
+  HomePage({required this.data});
+  
+  int _cardConstraint(num maxWidth) {
+    if (maxWidth < 600){
+      return 1;
+    } else if(maxWidth < 900) {
+      return 2;
+    } else if (maxWidth < 1200) {
+      return 3;
+    } else {
+      return 5;
+    }
+  }
+  
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(builder: (context, constraints) {
+      return GridView.builder(
+        itemCount: data?.length ?? 0,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: _cardConstraint(constraints.maxWidth)),
+        itemBuilder: (context, index) {
+          var details = data[index];
+          return RestCard(
+            mode: context.theme.backgroundColor,
+            restaurant: details,
+          );
+        },
+      );
+    });
+  }
+
 }

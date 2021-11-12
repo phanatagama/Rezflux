@@ -32,7 +32,6 @@ dependencies:
   easy_splash_screen: ^1.0.3
   google_fonts: ^2.1.0
   font_awesome_flutter: ^9.2.0
-  sliding_up_panel: ^2.0.0+1
   get: ^4.3.8
   get_storage: ^2.0.3
 

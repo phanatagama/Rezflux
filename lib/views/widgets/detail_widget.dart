@@ -4,13 +4,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:rezflux_app/models/restaurant_model.dart';
+import 'package:rezflux_app/models/detail_restaurant_model.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class DetailPage extends StatelessWidget {
-  final List<Restaurant> data;
-  final String id;
+  final Restaurant dataRestaurant;
+  static const String url =
+      'https://restaurant-api.dicoding.dev/images/medium/';
 
-  DetailPage({required this.data, required this.id});
+  DetailPage({required this.dataRestaurant});
 
   int _menuConstraint(num maxWidth) {
     if (maxWidth < 400) {
@@ -29,60 +31,149 @@ class DetailPage extends StatelessWidget {
   Widget _labelsMenu(List menu, String type, num count) {
     var icon = type == 'foods'
         ? FaIcon(
-      FontAwesomeIcons.utensils,
-      color: Colors.blue,
-      size: 16,
-    )
+            FontAwesomeIcons.utensils,
+            color: Colors.blue,
+            size: 16,
+          )
         : FaIcon(
-      FontAwesomeIcons.cocktail,
-      color: Colors.blue,
-      size: 16,
-    );
+            FontAwesomeIcons.cocktail,
+            color: Colors.blue,
+            size: 16,
+          );
     return Scrollbar(
         child: GridView.builder(
-          shrinkWrap: true,
-          itemCount: menu.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: count.toInt(),
-            childAspectRatio: (1 / .2),
+      shrinkWrap: true,
+      itemCount: menu.length,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: count.toInt(),
+        childAspectRatio: (1 / .2),
+      ),
+      itemBuilder: (_, index) {
+        return ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: 48,
+            minHeight: 48,
           ),
-          itemBuilder: (_, index) {
-            return ConstrainedBox(
-              constraints: BoxConstraints(
-                maxHeight: 48,
-                minHeight: 48,
-              ),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.blue.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(8),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.blue.withOpacity(0.3),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            padding: EdgeInsets.all(8),
+            margin: EdgeInsets.all(4),
+            child: Row(
+              children: [
+                icon,
+                SizedBox(
+                  width: 8,
                 ),
-                padding: EdgeInsets.all(8),
-                margin: EdgeInsets.all(4),
-                child: Row(
-                  children: [
-                    icon,
-                    SizedBox(
-                      width: 8,
-                    ),
-                    Text(
-                      menu[index].name,
-                      style: GoogleFonts.lato(fontWeight: FontWeight.w500),
-                      overflow: TextOverflow.ellipsis,
-                    )
-                  ],
-                ),
+                Text(
+                  menu[index].name,
+                  style: GoogleFonts.lato(fontWeight: FontWeight.w500),
+                  overflow: TextOverflow.ellipsis,
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    ));
+  }
+
+  Widget _customerReview(customerReviews) {
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        return ListTile(
+            title: Text(
+              customerReviews[index].name ?? "John Doe",
+              style: GoogleFonts.montserrat(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
               ),
-            );
-          },
-        ));
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(customerReviews[index].date ?? "16 Desember 1967",
+                    style: GoogleFonts.mulish(
+                      fontSize: 10,
+                    )),
+                Text(
+                  customerReviews[index].review ?? "Recomended",
+                  style: GoogleFonts.mulish(
+                    fontSize: 14,
+                  ),
+                )
+              ],
+            ),
+            leading: CircleAvatar(
+              child: Text(customerReviews[index].name[0] ?? "A",
+                  style: GoogleFonts.mulish(
+                    fontSize: 16,
+                  )),
+            ));
+      },
+      itemCount: customerReviews.length,
+    );
+  }
+
+  List<Widget> _categoriesRest(categories) {
+    List<Widget> list = [];
+    for (var index = 0; index < categories.length; index++) {
+      list.add(Chip(
+        label: Text(
+          categories[index]?.name ?? "Label",
+          style: GoogleFonts.nunito(
+              textStyle: TextStyle(
+            color: Colors.blue,
+            fontWeight: FontWeight.w700,
+          )),
+        ),
+        backgroundColor: const Color(0xA4EBF3),
+        avatar: FaIcon(
+          FontAwesomeIcons.checkCircle,
+          color: Colors.blue,
+          size: 16,
+          semanticLabel: 'Categories',
+        ),
+      ));
+      list.add(SizedBox(
+        width: 8,
+      ));
+    }
+    return list;
   }
 
   @override
   Widget build(BuildContext context) {
-    Restaurant dataRestaurant = data.where((restaurant) => restaurant.id == id).toList()[0];
-    return SingleChildScrollView(
-        child: Column(
+    BorderRadiusGeometry radius = BorderRadius.only(
+      topLeft: Radius.circular(24.0),
+      topRight: Radius.circular(24.0),
+    );
+    return SlidingUpPanel(
+        borderRadius: radius,
+        minHeight: 48,
+        color: Get.arguments ?? Colors.blue,
+        maxHeight: (dataRestaurant.customerReviews.length < 5)
+            ? dataRestaurant.customerReviews.length * 72.0
+            : 5.0 * 72.0,
+        collapsed: Container(
+          decoration: BoxDecoration(
+            color: Colors.blue,
+            borderRadius: radius,
+          ),
+          child: Center(
+            child: Text(
+              "Reviews",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+        panel: _customerReview(dataRestaurant.customerReviews),
+        body: SingleChildScrollView(
+            child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Stack(children: [
@@ -95,7 +186,7 @@ class DetailPage extends StatelessWidget {
                   image: DecorationImage(
                     fit: BoxFit.cover,
                     image: CachedNetworkImageProvider(
-                      "${dataRestaurant.pictureId}",
+                      "${url + dataRestaurant.pictureId}",
                     ),
                   ),
                 ),
@@ -135,6 +226,14 @@ class DetailPage extends StatelessWidget {
                               color: Colors.white,
                               fontSize: 32.0,
                               fontWeight: FontWeight.w700),
+                        ),
+                        Text(
+                          "${dataRestaurant.address}",
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w300),
                         ),
                         Row(
                           children: [
@@ -212,6 +311,17 @@ class DetailPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
+                    "Categories",
+                    style: GoogleFonts.nunito(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                    ),
+                  ),
+                  Row(children: _categoriesRest(dataRestaurant.categories)),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Text(
                     "Description",
                     style: GoogleFonts.nunito(
                       fontWeight: FontWeight.bold,
@@ -242,8 +352,8 @@ class DetailPage extends StatelessWidget {
                       ),
                       LayoutBuilder(
                         builder: (context, constraints) {
-                          return _labelsMenu(dataRestaurant.menus.foods, "foods",
-                              _menuConstraint(constraints.maxWidth));
+                          return _labelsMenu(dataRestaurant.menus.foods,
+                              "foods", _menuConstraint(constraints.maxWidth));
                         },
                       ),
                       Text(
@@ -255,8 +365,8 @@ class DetailPage extends StatelessWidget {
                       ),
                       LayoutBuilder(
                         builder: (context, constraints) {
-                          return _labelsMenu(dataRestaurant.menus.drinks, "drinks",
-                              _menuConstraint(constraints.maxWidth));
+                          return _labelsMenu(dataRestaurant.menus.drinks,
+                              "drinks", _menuConstraint(constraints.maxWidth));
                         },
                       ),
                     ])),
@@ -264,7 +374,6 @@ class DetailPage extends StatelessWidget {
               height: 48,
             )
           ],
-        ));
+        )));
   }
-
 }

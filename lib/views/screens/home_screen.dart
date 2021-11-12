@@ -1,9 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:rezflux_app/controller/restaurant_controller.dart';
 import 'package:rezflux_app/views/config/theme_config.dart';
-import 'package:rezflux_app/views/widgets/restcard_widget.dart';
+import 'package:rezflux_app/views/widgets/home_widget.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -11,50 +12,61 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State {
-  final RestaurantController controller = Get.put(RestaurantController());
+  final RestaurantController controller =
+      Get.put<RestaurantController>(RestaurantController());
   bool isDark = Get.isDarkMode;
   Icon customIcon = const Icon(Icons.search);
   Widget customSearchBar = const Text("RezFlux");
+
+  Widget _searchBar() {
+    return IconButton(
+      onPressed: () {
+        setState(() {
+          if (customIcon.icon == Icons.search) {
+            // Perform set of instructions.
+            customIcon = const Icon(Icons.cancel);
+            customSearchBar = ListTile(
+              leading: Icon(
+                Icons.search,
+                color: Colors.white,
+                size: 28,
+              ),
+              title: TextField(
+                controller: controller.searchController,
+                onChanged: (query) {
+                  controller.restaurantNameSearch(query);
+                },
+                decoration: InputDecoration(
+                  hintText: 'Cari Restoran',
+                  hintStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontStyle: FontStyle.italic,
+                  ),
+                  border: InputBorder.none,
+                ),
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            );
+          } else {
+            customIcon = const Icon(Icons.search);
+            customSearchBar = const Text("RezFlux");
+          }
+        });
+      },
+      icon: customIcon,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: customSearchBar,
           actions: [
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  if (customIcon.icon == Icons.search) {
-                    customIcon = const Icon(Icons.cancel);
-                    customSearchBar = const ListTile(
-                      leading: Icon(
-                        Icons.search,
-                        color: Colors.white,
-                        size: 28,
-                      ),
-                      title: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Cari Nama Restaurant',
-                          hintStyle: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontStyle: FontStyle.italic,
-                          ),
-                          border: InputBorder.none,
-                        ),
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    );
-                  } else {
-                    customIcon = const Icon(Icons.search);
-                    customSearchBar = const Text("RezFlux");
-                  }
-                });
-              },
-              icon: customIcon,
-            ),
+            _searchBar(),
             Switch(
                 value: isDark,
                 onChanged: (bool value) {
@@ -67,49 +79,15 @@ class _HomeState extends State {
                 })
           ],
         ),
-        body: controller.obx(
-          (data) => HomePage(data: data),
-          onEmpty: const Text("empty"),
-          onLoading: Center(
-            child: CircularProgressIndicator(),
-          ),
-        ));
+        body: Obx(() {
+          if (controller.restaurantList.isEmpty) {
+            return Center(
+              child: Lottie.network(
+                  'https://assets7.lottiefiles.com/packages/lf20_scgyykem.json'),
+            );
+          } else {
+            return HomePage(data: [...controller.restaurantList]);
+          }
+        }));
   }
-}
-
-class HomePage extends StatelessWidget {
-  final data;
-  
-  HomePage({required this.data});
-  
-  int _cardConstraint(num maxWidth) {
-    if (maxWidth < 600){
-      return 1;
-    } else if(maxWidth < 900) {
-      return 2;
-    } else if (maxWidth < 1200) {
-      return 3;
-    } else {
-      return 5;
-    }
-  }
-  
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      return GridView.builder(
-        itemCount: data?.length ?? 0,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: _cardConstraint(constraints.maxWidth)),
-        itemBuilder: (context, index) {
-          var details = data[index];
-          return RestCard(
-            mode: context.theme.backgroundColor,
-            restaurant: details,
-          );
-        },
-      );
-    });
-  }
-
 }

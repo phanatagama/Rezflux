@@ -27,7 +27,7 @@ void main() async {
   HttpOverrides.global = new MyHttpOverrides();
   await GetStorage.init();
   runApp(GetMaterialApp(
-    initialRoute: '/home',
+    initialRoute: '/',
     getPages: [
       GetPage(name: '/', page: () => SplashPage()),
       GetPage(

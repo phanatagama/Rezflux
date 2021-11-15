@@ -37,6 +37,7 @@ dependencies:
   material_floating_search_bar: ^0.3.6
   sliding_up_panel: ^2.0.0+1
   lottie: ^1.2.1
+  connectivity: ^3.0.6
 
 
 

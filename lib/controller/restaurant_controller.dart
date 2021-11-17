@@ -15,7 +15,7 @@ class RestaurantController extends GetxController with StateMixin {
     super.onInit();
     try {
       restaurantTempList = await _apiProvider.fetchListRestaurants();
-    }catch (_){
+    } catch (_) {
       restaurantTempList = [];
     }
     restaurantList.value = restaurantTempList;
@@ -37,7 +37,7 @@ class RestaurantController extends GetxController with StateMixin {
     try {
       restaurantDetail.value = await _apiProvider.fetchDetailRestaurants(id);
       isLoading.value = false;
-    } catch (_){
+    } catch (_) {
       restaurantDetail.value = [];
     }
   }

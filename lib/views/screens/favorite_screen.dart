@@ -1,24 +1,22 @@
 import 'dart:async';
-
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:rezflux_app/controller/restaurant_controller.dart';
-import 'package:rezflux_app/views/widgets/home_widget.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:rezflux_app/views/widgets/home_widget.dart';
 
-class Home extends StatefulWidget {
+class Favorite extends StatefulWidget {
   @override
-  _HomeState createState() => _HomeState();
+  _FavoriteState createState() => _FavoriteState();
 }
 
-class _HomeState extends State {
+class _FavoriteState extends State {
   final RestaurantController controller =
-      Get.put<RestaurantController>(RestaurantController());
-  Icon customIcon = const Icon(Icons.search);
-  Widget customSearchBar = const Text("RezFlux");
+  Get.find<RestaurantController>();
+  bool isDark = Get.isDarkMode;
   ConnectivityResult _connectionStatus = ConnectivityResult.none;
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
@@ -60,64 +58,20 @@ class _HomeState extends State {
     });
   }
 
-  Widget _searchBar() {
-    return IconButton(
-      onPressed: () {
-        setState(() {
-          if (customIcon.icon == Icons.search) {
-            // Perform set of instructions.
-            customIcon = const Icon(Icons.cancel);
-            customSearchBar = ListTile(
-              leading: Icon(
-                Icons.search,
-                color: Colors.white,
-                size: 28,
-              ),
-              title: TextField(
-                controller: controller.searchController,
-                onChanged: (query) {
-                  controller.restaurantNameSearch(query);
-                },
-                decoration: InputDecoration(
-                  hintText: 'Cari Restaurant',
-                  hintStyle: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontStyle: FontStyle.italic,
-                  ),
-                  border: InputBorder.none,
-                ),
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            );
-          } else {
-            customIcon = const Icon(Icons.search);
-            customSearchBar = const Text("RezFlux");
-          }
-        });
-      },
-      icon: customIcon,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    controller.favoriteFilter();
     return Scaffold(
         appBar: AppBar(
-          title: customSearchBar,
-          actions: [
-            _searchBar(),
-          ],
+          title: const Text("Favorite"),
         ),
         body: Obx(() {
-          if (controller.restaurantList.isEmpty) {
+          if (controller.restaurantFav.isEmpty) {
             if (_connectionStatus == ConnectivityResult.wifi ||
                 _connectionStatus == ConnectivityResult.mobile) {
               return Center(
                 child: Lottie.network(
-                    'https://assets7.lottiefiles.com/packages/lf20_scgyykem.json'),
+                    'https://assets3.lottiefiles.com/packages/lf20_fp7svyno.json'),
               );
             } else {
               return Center(child: Text("No Internet Connection!"));
@@ -125,7 +79,7 @@ class _HomeState extends State {
           } else {
             if (_connectionStatus == ConnectivityResult.wifi ||
                 _connectionStatus == ConnectivityResult.mobile) {
-              return HomePage(data: [...controller.restaurantList]);
+              return HomePage(data: controller.restaurantFav);
             } else {
               return Center(child: Text("No Internet Connection!"));
             }

@@ -38,6 +38,11 @@ dependencies:
   material_floating_search_bar: ^0.3.6
   sliding_up_panel: ^2.0.0+1
   lottie: ^1.2.1
+  persistent_bottom_nav_bar: ^4.0.2
+  flutter_local_notifications: ^9.1.2
+  intl: ^0.17.0
+  android_alarm_manager: ^2.0.2
+  rxdart: ^0.27.2
 
 
 

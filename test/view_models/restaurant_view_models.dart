@@ -1,8 +1,8 @@
-import 'package:get/get.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:rezflux_app/models/detail_restaurant_model.dart';
 import 'package:rezflux_app/models/list_restaurant_model.dart';
 
-var dummy ={
+var listResponse = {
   "error": false,
   "message": "success",
   "count": 20,
@@ -25,7 +25,8 @@ var dummy ={
     }
   ]
 };
-var detail = {
+
+var detailResponse = {
   "error": false,
   "message": "success",
   "restaurant": {
@@ -61,7 +62,7 @@ var detail = {
         }
       ]
     },
-    "rating": 4.2,
+    "rating": 4,
     "customerReviews": [
       {
         "name": "Ahmad",
@@ -71,43 +72,19 @@ var detail = {
     ]
   }
 };
-class ApiProvider extends GetConnect {
-  String apiUrl = 'https://restaurant-api.dicoding.dev';
-  Future fetchListRestaurants() async {
-  //   final response = await get('$apiUrl/list');
-  //   if (response.status.hasError) {
-  //     print("error status " + response.statusCode.toString());
-  //     return Future.error(response.statusText.toString());
-  //   } else {
-  //     ListResponse data = ListResponse.fromJson(response.body);
-  //     return data.restaurants;
-  //   }
-    ListResponse data = ListResponse.fromJson(dummy);
-    return data.restaurants;
-  }
-  Future fetchListRestaurants2() async {
-    // final response = await get('$apiUrl/list');
-    // if (response.status.hasError) {
-    //   print("error status " + response.statusCode.toString());
-    //   return Future.error(response.statusText.toString());
-    // } else {
-    //   ListResponse data = ListResponse.fromJson(dummy);
-    //   return data;
-    // }
-    ListResponse data = ListResponse.fromJson(dummy);
-    return data;
-  }
 
-  Future fetchDetailRestaurants(String parameter) async {
-    // final response = await get('$apiUrl/detail/$parameter');
-    // if (response.status.hasError) {
-    //   print("error status " + response.statusCode.toString());
-    //   return Future.error(response.statusText.toString());
-    // } else {
-    //   DetailResponse data = DetailResponse.fromJson(response.body);
-    //   return [data.restaurant];
-    // }
-    DetailResponse data = DetailResponse.fromJson(detail);
-    return [data.restaurant];
-  }
+void main() {
+  group('Testing JSON Parse', () {
+    test('data.message should be success', () {
+      ListResponse data = ListResponse.fromJson(listResponse);
+      expect(data.error, false);
+      expect(data.message, "success");
+      expect(data.count, 20);
+    });
+    test('data.message should be success', () {
+      DetailResponse data = DetailResponse.fromJson(detailResponse);
+      expect(data.error, false);
+      expect(data.message, "success");
+    });
+  });
 }

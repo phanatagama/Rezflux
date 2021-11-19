@@ -1,5 +1,5 @@
 import 'package:easy_splash_screen/easy_splash_screen.dart';
-import 'home_screen.dart';
+import 'package:rezflux_app/views/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 
 class SplashPage extends StatelessWidget {
@@ -18,7 +18,7 @@ class SplashPage extends StatelessWidget {
       backgroundColor: Colors.blue,
       showLoader: true,
       loadingText: Text("Loading..."),
-      navigator: Home(),
+      navigator: MyApp(),
       durationInSeconds: 3,
     );
   }

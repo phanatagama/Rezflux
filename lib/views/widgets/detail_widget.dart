@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rezflux_app/models/detail_restaurant_model.dart';
+import 'package:rezflux_app/views/widgets/favorite_widget.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class DetailPage extends StatelessWidget {
@@ -285,7 +286,8 @@ class DetailPage extends StatelessWidget {
               SafeArea(
                 child: Padding(
                   padding: const EdgeInsets.all(32),
-                  child: CircleAvatar(
+                  child: Row( mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [CircleAvatar(
                     backgroundColor: Colors.grey.withOpacity(0.5),
                     child: IconButton(
                       icon: FaIcon(
@@ -296,7 +298,10 @@ class DetailPage extends StatelessWidget {
                         Get.back();
                       },
                     ),
-                  ),
+                  ), CircleAvatar(
+                      backgroundColor: Colors.grey.withOpacity(0.5),
+                      child: FavoriteWidget(id: dataRestaurant.id),
+                    )],),
                 ),
               ),
             ]),

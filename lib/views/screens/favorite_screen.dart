@@ -14,8 +14,7 @@ class Favorite extends StatefulWidget {
 }
 
 class _FavoriteState extends State {
-  final RestaurantController controller =
-  Get.find<RestaurantController>();
+  final RestaurantController controller = Get.find<RestaurantController>();
   bool isDark = Get.isDarkMode;
   ConnectivityResult _connectionStatus = ConnectivityResult.none;
   final Connectivity _connectivity = Connectivity();

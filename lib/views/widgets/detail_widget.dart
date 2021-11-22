@@ -165,7 +165,7 @@ class DetailPage extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              "Reviews",
+              "Swipe up to see Reviews",
               style: TextStyle(
                 color: Colors.white,
               ),
@@ -286,22 +286,27 @@ class DetailPage extends StatelessWidget {
               SafeArea(
                 child: Padding(
                   padding: const EdgeInsets.all(32),
-                  child: Row( mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [CircleAvatar(
-                    backgroundColor: Colors.grey.withOpacity(0.5),
-                    child: IconButton(
-                      icon: FaIcon(
-                        FontAwesomeIcons.arrowLeft,
-                        color: Colors.white,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: Colors.grey.withOpacity(0.5),
+                        child: IconButton(
+                          icon: FaIcon(
+                            FontAwesomeIcons.arrowLeft,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            Get.back();
+                          },
+                        ),
                       ),
-                      onPressed: () {
-                        Get.back();
-                      },
-                    ),
-                  ), CircleAvatar(
-                      backgroundColor: Colors.grey.withOpacity(0.5),
-                      child: FavoriteWidget(id: dataRestaurant.id),
-                    )],),
+                      CircleAvatar(
+                        backgroundColor: Colors.grey.withOpacity(0.5),
+                        child: FavoriteWidget(id: dataRestaurant.id),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ]),

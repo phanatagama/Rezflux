@@ -5,7 +5,6 @@ import 'package:rezflux_app/main.dart';
 import 'package:rezflux_app/utils/notification_helper.dart';
 import 'package:rezflux_app/view_models/restaurant_view_model.dart';
 
-
 final ReceivePort port = ReceivePort();
 
 class BackgroundService {
@@ -19,7 +18,6 @@ class BackgroundService {
 
   factory BackgroundService() => _service ?? BackgroundService._internal();
 
-
   void initializeIsolate() {
     IsolateNameServer.registerPortWithName(
       port.sendPort,
@@ -30,7 +28,7 @@ class BackgroundService {
   static Future<void> callback() async {
     print('Alarm fired!');
     final NotificationHelper _notificationHelper = NotificationHelper();
-    var result = await ApiProvider().fetchListRestaurants2();
+    var result = await ApiProvider().fetchListRestaurants();
     await _notificationHelper.showNotification(
         flutterLocalNotificationsPlugin, result);
 

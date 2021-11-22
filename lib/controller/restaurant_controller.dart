@@ -33,7 +33,7 @@ class RestaurantController extends GetxController with StateMixin {
     } else {
       restaurantList.value = restaurantTempList
           .where((element) =>
-          element.name.toLowerCase().contains(name.toLowerCase()))
+              element.name.toLowerCase().contains(name.toLowerCase()))
           .toList();
     }
   }

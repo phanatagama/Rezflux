@@ -18,7 +18,7 @@ class _FavoriteWidgetState extends State {
   _FavoriteWidgetState({required this.id});
   RestaurantController controller = Get.find<RestaurantController>();
 
-  bool _checkFavorite(String id){
+  bool _checkFavorite(String id) {
     List favorite = FavoriteService().favorite;
     if (favorite.contains(id)) {
       return true;
@@ -31,7 +31,9 @@ class _FavoriteWidgetState extends State {
   Widget build(BuildContext context) {
     return IconButton(
       icon: FaIcon(
-        _checkFavorite(id) ? FontAwesomeIcons.solidHeart : FontAwesomeIcons.heart,
+        _checkFavorite(id)
+            ? FontAwesomeIcons.solidHeart
+            : FontAwesomeIcons.heart,
         color: Colors.red,
         size: _checkFavorite(id) ? 24 : 16,
         semanticLabel: 'Fav Logo',
@@ -44,5 +46,4 @@ class _FavoriteWidgetState extends State {
       },
     );
   }
-
 }

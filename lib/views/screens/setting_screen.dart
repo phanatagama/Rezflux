@@ -17,8 +17,7 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State {
-  final RestaurantController controller =
-      Get.find<RestaurantController>();
+  final RestaurantController controller = Get.find<RestaurantController>();
   bool isDark = Get.isDarkMode;
   final NotificationHelper _notificationHelper = NotificationHelper();
   ConnectivityResult _connectionStatus = ConnectivityResult.none;
@@ -77,15 +76,18 @@ class _SettingState extends State {
           title: const Text("Setting"),
         ),
         body: Obx(() {
-            if (_connectionStatus == ConnectivityResult.wifi ||
-                _connectionStatus == ConnectivityResult.mobile) {
-              return Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(padding: EdgeInsets.all(16),
-                      child: Text("Theme"),),Switch(
+          if (_connectionStatus == ConnectivityResult.wifi ||
+              _connectionStatus == ConnectivityResult.mobile) {
+            return Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Text("Theme"),
+                    ),
+                    Switch(
                         value: isDark,
                         onChanged: (bool value) {
                           setState(() {
@@ -94,28 +96,33 @@ class _SettingState extends State {
                                 value ? ThemeMode.dark : ThemeMode.light);
                             ThemeService().switchTheme();
                           });
-                        })],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(padding: EdgeInsets.all(16),
-                        child: Text("Notification"),),Switch(
-                          value: controller.isScheduled.value,
-                          onChanged: (value) async {
-                            if (Platform.isIOS) {
-                              customDialog(context);
-                            } else {
-                              controller.scheduledNews(value);
-                            }
-                          })],
-                  ),
-                ],
-              );
-              // return Center(child:Text("Ini Setting"));
-            } else {
-              return Center(child: Text("No Internet Connection!"));
-            }
+                        })
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Text("Notification"),
+                    ),
+                    Switch(
+                        value: controller.isScheduled.value,
+                        onChanged: (value) async {
+                          if (Platform.isIOS) {
+                            customDialog(context);
+                          } else {
+                            controller.scheduledNews(value);
+                          }
+                        })
+                  ],
+                ),
+              ],
+            );
+            // return Center(child:Text("Ini Setting"));
+          } else {
+            return Center(child: Text("No Internet Connection!"));
+          }
         }));
   }
 }
